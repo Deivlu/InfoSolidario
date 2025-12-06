@@ -15,8 +15,7 @@ urlpatterns = [
     path('cuentas/', include('django.contrib.auth.urls')), 
 
     # 2. Enlazar la nueva app 'articulos'
-    path('articulos/', include('articulos.urls')), 
-
+    path('articulos/', include('apps.articulos.urls')),
     # 3. Enlazar la nueva app 'articulos'
     path("usuarios/", include("apps.usuarios.urls")),
 

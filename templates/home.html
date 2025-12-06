@@ -1,8 +1,73 @@
 {% extends 'base.html' %}
 
 {% block contenido %}
-        <div>
-            <h1>PORTADA DE ACCIONES SOLIDARIAS</h1>
-            <p>Aquí se mostrará la selección de publicaciones más recientes o destacadas.</p>
+    <div class="main-content">
+        
+        {# SECCIÓN DE BIENVENIDA (Texto estático) #}
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h1>BIENVENIDOS A INFOSOLIDARIO</h1>
+            <p style="font-size: 1.2em; color: #555;">Conectando corazones solidarios en el Litoral.</p>
         </div>
-{% endblock contenido %}
+
+        <h2>Últimas Acciones Publicadas</h2>
+        <hr>
+
+        {# CONTENEDOR DE LA GRILLA (FLEXBOX) #}
+        {# display: flex -> Pone los elementos uno al lado del otro #}
+        {# flex-wrap: wrap -> Si no entran, bajan a la siguiente línea #}
+        <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px;">
+            
+            {# 2. BUCLE FOR: Recorremos la lista de artículos #}
+            {# "articulos_destacados" viene desde tu archivo views.py #}
+            {% for a in articulos_destacados %}
+                
+                {# TARJETA INDIVIDUAL DEL ARTÍCULO #}
+                <div style="border: 1px solid #ddd; border-radius: 8px; width: 300px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); background: white;">
+                    
+                    {# 3. IMAGEN CON ENLACE #}
+                    {# El enlace {% url ... %} lleva al detalle usando el ID (pk) del artículo #}
+                    <a href="{% url 'articulos:path_detalle_articulo' a.pk %}">
+                        
+                        {# 4. CONDICIONAL IF: ¿Tiene imagen el artículo? #}
+                        {% if a.imagen %}
+                            {# Si TIENE: Mostramos la foto #}
+                            <img src="{{ a.imagen.url }}" alt="{{ a.titulo }}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 5px;">
+                        {% else %}
+                            {# Si NO TIENE: Mostramos un cuadro gris por defecto #}
+                            <div style="width: 100%; height: 200px; background: #eee; display: flex; align-items: center; justify-content: center; border-radius: 5px;">
+                                <p style="color: #888;">Sin imagen</p>
+                            </div>
+                        {% endif %}
+                    </a>
+
+                    {# TÍTULO (Clickeable) #}
+                    <h3 style="margin: 15px 0 10px 0; font-size: 1.1em;">
+                        <a href="{% url 'articulos:path_detalle_articulo' a.pk %}" style="text-decoration: none; color: #0d836c;">
+                            {{ a.titulo }}
+                        </a>
+                    </h3>
+                    
+                    {# ETIQUETA DE CATEGORÍA #}
+                    <span style="background-color: #0d836c; color: white; padding: 3px 8px; border-radius: 10px; font-size: 0.8em;">
+                        {{ a.categoria.nombre }}
+                    </span>
+
+                    {# BOTÓN "LEER MÁS" #}
+                    <div style="margin-top: 15px;">
+                        <a href="{% url 'articulos:path_detalle_articulo' a.pk %}" style="text-decoration: none; font-weight: bold; color: #333;">Leer más →</a>
+                    </div>
+                </div>
+
+            {# 5. BLOQUE EMPTY: Se ejecuta si la lista está vacía #}
+            {% empty %}
+                <p>Aún no hay acciones solidarias publicadas.</p>
+            {% endfor %}
+
+        </div>
+        
+        {# BOTÓN FINAL PARA VER TODO #}
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="{% url 'articulos:path_listar_articulos' %}" class="button-action">VER TODAS LAS ACCIONES</a>
+        </div>
+    </div>
+{% endblock contenido %}    

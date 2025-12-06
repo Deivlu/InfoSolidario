@@ -16,10 +16,14 @@
             </div>
         </div>
 
-        {% if user.is_authenticated and (user == articulo.autor or user.is_staff) %}
+    {% if user.is_authenticated %}
+    
+        {% if user == articulo.autor or user.is_staff %}
             <a href="{% url 'articulos:path_modificar_articulo' articulo.pk %}" class="button-action">Editar Artículo</a>
             <a href="{% url 'articulos:path_eliminar_articulo' articulo.pk %}" class="button-action-danger">Eliminar Artículo</a>
         {% endif %}
+
+    {% endif %}
         
         <div class="comentarios-section">
             <h2>Comentarios ({{ articulo.comentarios.count }})</h2>
