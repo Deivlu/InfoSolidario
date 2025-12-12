@@ -4,6 +4,7 @@ InfoSolidaria es una aplicación web desarrollada con Django diseñada para cone
 El objetivo principal es visibilizar y organizar acciones solidarias (como colectas, comedores y ferias) mediante una plataforma centralizada, accesible y confiable.
 
 ✨ Características Principales
+
 👤 Gestión de Usuarios y Roles
 Registro e Inicio de Sesión: Sistema completo de autenticación de usuarios.
 
